@@ -1,0 +1,42 @@
+import React from 'react';
+
+export const FormInput = ({width, type='text', value, readonly=false, placeholder, style, label, onChangeText=null}) => {
+    return(
+        <div style={{...styles.wrapperStyle, width, ...style}}>
+            <div style={styles.labelStyle}>{label}</div>
+            <div style={styles.inputWrapper}>
+                <input type={type} placeholder={placeholder} readOnly={readonly} value={value} style={styles.inputStyle} onChange={onChangeText} />
+            </div>
+        </div>
+    );
+}
+
+const styles = {
+    wrapperStyle: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '80%',
+        margin: 4,
+    },
+    labelStyle: {
+        fontFamily: 'Titillium Web',
+        color: '#999999',
+        fontSize: 12,
+    },
+    inputWrapper: {
+        height: 25,
+        borderBottom: '1px solid #999999',
+        paddingBottom: 2,
+        paddingLeft: 2,
+
+    },
+    inputStyle: {
+        fontFamily: 'Titillium Web',
+        color: '#333333',
+        fontSize: 14,
+        fontWeight: 600,
+        backgroundColor: 'transparent',
+        border: 'none',
+        width: '100%',
+    }
+}

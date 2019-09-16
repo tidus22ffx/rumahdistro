@@ -1,0 +1,14 @@
+.contentItemWrapper {
+    min-height: 35px;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 0.5px solid #999999;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    align-items: flex-end;
+}
+.contentItemWrapper:hover {
+    cursor: pointer;
+    background-color: #c39243;
+    color: #f1f1f1;
+}

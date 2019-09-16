@@ -1,0 +1,84 @@
+.inputStyle {
+    background-color: #f1f1f1;
+    border: none;
+    border-bottom: #c39243 0.5px solid;
+    padding-left: 10px;
+    font-family: 'Titillium Web';
+    color: #c39243;
+}
+
+.datePickerInput {
+    font-family: 'Titillium Web';
+    color: #333333;
+    font-size: 14;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+}
+
+#react-select-2-input {
+    font-family: 'Titillium Web';
+    font-size: 14px;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.buttonTransparent {
+    border: 1px solid #808080;
+    width: 30%;
+    height: 35px;
+    display: flex;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    border-radius: 3px;
+    font-weight: 600;
+    color: #808080; 
+    font-size: 14px
+}
+
+.buttonTransparentSelected {
+    border: none;
+    width: 30%;
+    height: 35px;
+    display: flex;
+    background-color: #333333;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    border-radius: 3px;
+    font-weight: 600;
+    color: #f1f1f1;
+    font-size: 14px
+}
+
+.buttonTransparent:hover {
+    border: none;
+    cursor: pointer;
+    background-color: #333333;
+    color: #f1f1f1;
+}
+
+.buttonWarning {
+    border: 1px solid #808080;
+    width: 30%;
+    height: 30px;
+    display: flex;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    border-radius: 3px;
+    font-weight: 600;
+    color: #808080; 
+    font-size: 14px
+}
+
+.buttonWarning:hover {
+    border: none;
+    cursor: pointer;
+    background-color: #c0392b;
+    color: #f1f1f1;
+}
