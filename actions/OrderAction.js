@@ -255,7 +255,7 @@ const loadOrderByIdSuccess = (dispatch, detail, header) => {
         value: header.reseller,
       };
     };
-    console.log(header);
+    // console.log(header);
     const modalForm = {
       idOrderH: header.idOrderH,
       orderDate: new Date(header.orderDate),

@@ -1,4 +1,5 @@
 import React from 'react';
+import CurrencyInput from 'react-currency-input';
 
 export const FormInput = ({width, type='text', value, readonly=false, placeholder, style, label, onChangeText=null}) => {
     return(
@@ -6,6 +7,26 @@ export const FormInput = ({width, type='text', value, readonly=false, placeholde
             <div style={styles.labelStyle}>{label}</div>
             <div style={styles.inputWrapper}>
                 <input type={type} placeholder={placeholder} readOnly={readonly} value={value} style={styles.inputStyle} onChange={onChangeText} />
+            </div>
+        </div>
+    );
+}
+
+export const MoneyInput = ({width, type='text', value, readonly=false, placeholder, style, label, onChangeText=null}) => {
+    return(
+        <div style={{...styles.wrapperStyle, width, ...style}}>
+            <div style={styles.labelStyle}>{label}</div>
+            <div style={styles.inputWrapper}>
+                <CurrencyInput 
+                    prefix='Rp ' 
+                    decimalSeparator="," 
+                    thousandSeparator="." 
+                    precision={0}
+                    placeholder={placeholder} 
+                    readOnly={readonly} 
+                    value={value} 
+                    style={styles.inputStyle} 
+                    onChangeEvent={(e, m, value) => onChangeText(value)} />
             </div>
         </div>
     );

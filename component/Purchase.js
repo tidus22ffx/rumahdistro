@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import {FormInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {FormInput, MoneyInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {formatCurrency, formatNumber} from '../lib/utilities';
 import { FaTrash, FaAngleLeft, FaAngleRight, FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import '../css/input.css';
 
@@ -124,9 +125,9 @@ export const PurchasePopup = ({
                 <div key={index} style={styles.detailBoxHeader}>
                     <div style={{flex: 1, paddingLeft: 5, }}>{index+1}</div>
                     <div style={{flex: 4, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.productName}</div>
-                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.price}</div>
+                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.price)}</div>
                     <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.qty}</div>
-                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.subtotal}</div>
+                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.subtotal)}</div>
                     <div style={{flex: 1, }}>
                         <button onClick={() => removeDetail(index)}>
                             <FaTrash color='#c0392b'/>
@@ -187,10 +188,10 @@ export const PurchasePopup = ({
             </div>
             <div style={styles.rightBottomFields}>
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <FormInput width='25%' type='number' value={modalData.discount} onChangeText={(value) => setDiscount(value.target.value)} label='Diskon' placeholder='Masukkan Diskon' />
-                    <FormInput width='25%' value={modalData.totalPrice} readonly label='Total' placeholder='0' />
+                    <MoneyInput width='25%' type='number' value={modalData.discount} onChangeText={(value) => setDiscount(value)} label='Diskon' placeholder='Masukkan Diskon' />
+                    <MoneyInput width='25%' value={modalData.totalPrice} readonly label='Total' placeholder='0' />
                 </div>
-                <FormInput width='25%' value={modalData.totalPrice - modalData.discount} readonly label='Harga Bersih' placeholder='0' />
+                <MoneyInput width='25%' value={modalData.totalPrice - modalData.discount} readonly label='Harga Bersih' placeholder='0' />
             </div>
             {showError()}
             <div style={{ marginTop: 10, width: '80%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>

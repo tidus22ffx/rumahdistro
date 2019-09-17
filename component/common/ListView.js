@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { formatNumber } from '../../lib/utilities';
 import { ButtonTransparent } from './';
 import '../../css/ListView.css';
 
@@ -15,6 +16,10 @@ export const ListView = ({columns = ['Id', 'First Name', 'Last Name', 'Avatar'],
         return Object.keys(item).map(key => {
             if(typeof(item[key]) === 'object' && item[key] !== null){
                 return <div style={styles.contentItem}>{item[key].name}</div>;
+            }
+
+            if(typeof(item[key]) === 'number' ){
+                return <div style={styles.contentItem}>{formatNumber(item[key])}</div>
             }
                 return <div style={styles.contentItem}>{item[key]}</div>;
         })

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import {FormInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {FormInput, MoneyInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
 import { FaTrash, FaAngleLeft, FaAngleRight, FaAngleDoubleLeft, 
          FaAngleDoubleRight, FaExclamation } from 'react-icons/fa';
 import { pageController } from '../lib/Pagination';
@@ -55,7 +55,6 @@ export const ProductContent = ({
         
     // }
 
-    console.log(paging);
     return(
         <div style={styles.wrapper}>
             <div style={styles.headerStyle}>
@@ -129,7 +128,6 @@ export const ProductPopup = ({
 
 
     const renderButton = () => {
-        console.log(loading);
         if(loading){
             return(
                 <ButtonTransparent className='buttonTransparent'>
@@ -161,12 +159,12 @@ export const ProductPopup = ({
             <div style={styles.detailArea}>
                 <FormInput width='40%' value={modalData.productName} onChangeText={(value) => setProductName(value.target.value)} label='Product Name' placeholder='Masukkan Nama Produk' />  
                 <div style={{width:'3%'}}></div>
-                <FormInput width='40%' type='number' value={modalData.productPrice} onChangeText={(value) => setPrice(value.target.value)} label='Price' placeholder='Harga Beli' />
+                <MoneyInput width='40%' type='number' value={modalData.productPrice} onChangeText={(value) => setPrice(value)} label='Price' placeholder='Harga Beli' />
             </div>
             <div style={styles.detailArea}>
-                <FormInput width='40%' type='number' value={modalData.sellerPrice} onChangeText={(value) => setSellerPrice(value.target.value)} label='Seller Price' placeholder='Masukkan Harga Reseller' />  
+                <MoneyInput width='40%' type='number' value={modalData.sellerPrice} onChangeText={(value) => setSellerPrice(value)} label='Seller Price' placeholder='Masukkan Harga Reseller' />  
 				<div style={{width:'3%'}}></div>
-                <FormInput width='40%' type='number' value={modalData.normalPrice} onChangeText={(value) => setNormalPrice(value.target.value)} label='Normal Price' placeholder='Harga Normal' />
+                <MoneyInput width='40%' type='number' value={modalData.normalPrice} onChangeText={(value) => setNormalPrice(value)} label='Normal Price' placeholder='Harga Normal' />
 			</div>
             {showError()}
             <div style={{ marginTop: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>

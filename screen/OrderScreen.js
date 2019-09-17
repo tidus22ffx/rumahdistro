@@ -67,7 +67,7 @@ class OrderScreen extends Component {
             const item = {
                 idProduct: this.state.selectedProduct.value.idProduct,
                 productName: this.state.selectedProduct.value.productName,
-                price: this.state.selectedProduct.value.productPrice,
+                price: this.state.selectedProduct.value.normalPrice,
                 qty: this.state.inputQty,
                 subtotal: (this.state.selectedProduct.value.normalPrice * this.state.inputQty) 
             };
@@ -208,7 +208,7 @@ class OrderScreen extends Component {
                     products={this.props.productList}
                     users={this.props.userList}
                     selectedProduct={this.state.selectedProduct}
-                    selectProduct={(product) => this.setState({selectedProduct:product})}
+                    selectProduct={(product) => {console.log(product);this.setState({selectedProduct:product})}}
                     inputedQty={this.state.inputQty}
                     inputQty={(value) => this.inputQuantity(value)}
                     saveAction={() => this.saveButton()}

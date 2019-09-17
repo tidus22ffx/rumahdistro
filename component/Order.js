@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import {FormInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {FormInput, MoneyInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {formatCurrency, formatNumber} from '../lib/utilities';
 import { FaTrash, FaAngleLeft, FaAngleRight, FaAngleDoubleLeft, FaAngleDoubleRight, FaFileImage } from 'react-icons/fa';
 import '../css/input.css';
 
@@ -168,9 +169,9 @@ export const OrderPopup = ({
                 <div key={index} style={styles.detailBoxHeader}>
                     <div style={{flex: 1, paddingLeft: 5, }}>{index+1}</div>
                     <div style={{flex: 4, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.productName}</div>
-                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.price}</div>
-                    <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.qty}</div>
-                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.subtotal}</div>
+                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.price)}</div>
+                    <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatNumber(item.qty)}</div>
+                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.subtotal)}</div>
                     <div style={{flex: 1, }}>
                         <button onClick={() => removeDetail(index)}>
                             <FaTrash color='#c0392b'/>
@@ -254,7 +255,7 @@ export const OrderPopup = ({
         }
     ]
 
-    console.log(inputedQty);
+    // console.log(inputedQty);
     return (
         <div style={styles.popupContent}>
             <div style={styles.headerArea}>
@@ -288,33 +289,33 @@ export const OrderPopup = ({
             <div style={styles.rightBottomFields}>
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <ComboBox width='25%' selectedOption={modalData.status} onChange={(item) => setStatus(item)} label='Status' placeholder='Pilih Status' options={statusOptions} />
-                    <FormInput 
+                    <MoneyInput 
                         width='25%' 
                         type='number' 
                         value={modalData.discount} 
-                        onChangeText={(value) => setDiscount(value.target.value)} 
+                        onChangeText={(value) => setDiscount(value)} 
                         label='Diskon' 
                         placeholder='Masukkan Diskon' 
                     />
-                    <FormInput 
+                    <MoneyInput 
                         width='25%' 
                         value={modalData.totalPrice} 
                         readonly={modalData.isReseller}
-                        onChangeText={(value) => setTotalPrice(value.target.value)} 
+                        onChangeText={(value) => setTotalPrice(value)} 
                         label='Total' 
                         placeholder='0' 
                     />
                 </div>
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <FormInput 
+                    <MoneyInput 
                         width='25%' 
                         type='number' 
                         value={modalData.ongkir} 
-                        onChangeText={(value) => setOngkir(value.target.value)} 
+                        onChangeText={(value) => setOngkir(value)} 
                         label='Ongkir' 
                         placeholder='0' 
                     />
-                    <FormInput 
+                    <MoneyInput 
                         width='25%' 
                         value={(modalData.totalPrice - modalData.discount) + parseInt(modalData.ongkir)} 
                         readonly 

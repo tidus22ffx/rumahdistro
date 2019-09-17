@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import {FormInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {FormInput, MoneyInput, FormDatePicker, ListView, ComboBox, ButtonTransparent} from './common';
+import {formatCurrency, formatNumber} from '../lib/utilities';
 import { FaTrash, FaAngleLeft, FaAngleRight, FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import '../css/input.css';
 
@@ -121,9 +122,9 @@ export const OperationalPopup = ({
                 <div key={index} style={styles.detailBoxHeader}>
                     <div style={{flex: 1, paddingLeft: 5, }}>{index+1}</div>
                     <div style={{flex: 4, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.productName}</div>
-                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.price}</div>
-                    <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.qty}</div>
-                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.subtotal}</div>
+                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.price)}</div>
+                    <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatNumber(item.qty)}</div>
+                    <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.subtotal)}</div>
                     <div style={{flex: 1, }}>
                         <button onClick={() => removeDetail(index)}>
                             <FaTrash color='#c0392b'/>
@@ -166,9 +167,9 @@ export const OperationalPopup = ({
             </div>
             <div style={styles.detailArea}>
                 <FormInput width='30%' value={inputedProduct} onChangeText={(value) => inputProduct(value.target.value)} label='Product Name' placeholder='Masukkan Nama Produk' />  
+                <div style={{width:'2%'}}></div>
+                <MoneyInput type='number' width='20%' value={inputedPrice} onChangeText={(value) => inputPrice(value)} label='Price' placeholder='Masukkan Harga' />  
                 <div style={{width:'3%'}}></div>
-                <FormInput type='number' width='15%' value={inputedPrice} onChangeText={(value) => inputPrice(value.target.value)} label='Price' placeholder='Masukkan Harga' />  
-                <div style={{width:'5%'}}></div>
                 <FormInput type='number' width='15%' value={inputedQty} onChangeText={(value) => inputQty(value.target.value)} label='Qty' placeholder='Masukkan jumlah unit' />
                 <div style={{width:'3%'}}></div>
                 <ButtonTransparent onClick={() => addDetail()} height={25} width='10%' className={'buttonTransparent'}>Add</ButtonTransparent>
@@ -187,9 +188,9 @@ export const OperationalPopup = ({
             <div style={styles.rightBottomFields}>
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <ComboBox width='25%' selectedOption={modalData.selectedUser} onChange={(item) => setUser(item)} label='User' placeholder='Pilih User' options={users} />
-                    <FormInput width='25%' value={modalData.totalPrice} readonly label='Total' placeholder='0' />
+                    <MoneyInput width='25%' value={modalData.totalPrice} readonly label='Total' placeholder='0' />
                 </div>
-                <FormInput width='25%' value={modalData.totalPrice} readonly label='Harga Bersih' placeholder='0' />
+                <MoneyInput width='25%' value={modalData.totalPrice} readonly label='Harga Bersih' placeholder='0' />
             </div>
             {showError()}
             <div style={{ marginTop: 10, width: '80%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
