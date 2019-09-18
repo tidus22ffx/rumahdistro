@@ -7,6 +7,7 @@ import { getDailyReport,
          selectUserReport
           } from '../actions';
 import { connect } from 'react-redux';
+import {formatNumber, formatCurrency} from '../lib/utilities';
 import Dashboard from './Dashboard';
 import Report from '../component/Report';
 import WebFont from 'webfontloader';
@@ -97,9 +98,11 @@ class DailyReport extends Component {
                 <div style={tableRow}>
                     <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{item.user_name}</div>
                     <div style={{ color: '#333333', fontSize: 14, flex: 1 }}>{item.product_name}</div>
-                    <div style={{ color: '#333333', fontSize: 14, flex: 0.4 }}>{item.qty} pcs</div>
-                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{item.omset}</div>
-                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{item.laba}</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(item.omset)}</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(item.omset)}</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.4 }}>{formatNumber(item.qty)} pcs</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(item.omset)}</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(item.laba)}</div>
                 </div>
             );
         })
@@ -107,8 +110,10 @@ class DailyReport extends Component {
         return (
             <div style={tableContainer}>
                 <div style={tableHeader}>
-                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>Reseller</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>Pembeli</div>
                     <div style={{ color: '#333333', fontSize: 14, flex: 1 }}>Produk</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>Harga Beli</div>
+                    <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>Harga Jual</div>
                     <div style={{ color: '#333333', fontSize: 14, flex: 0.4 }}>Kuantitas</div>
                     <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>Total Penjualan</div>
                     <div style={{ color: '#333333', fontSize: 14, flex: 0.8 }}>Laba</div>
@@ -118,9 +123,11 @@ class DailyReport extends Component {
                 </div>
                 <div style={footerContent}>
                     <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 1.8 }}>Total</div>
-                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.4 }}>{qty}</div>
-                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{omset}</div>
-                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{laba}</div>
+                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(omset)}</div>
+                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(omset)}</div>
+                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.4 }}>{formatNumber(qty)}</div>
+                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(omset)}</div>
+                    <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(laba)}</div>
                 </div>
             </div>
         )
@@ -170,7 +177,7 @@ class DailyReport extends Component {
 
 const styles={
     tableContainer: {
-        width: '70%',
+        width: '85%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
