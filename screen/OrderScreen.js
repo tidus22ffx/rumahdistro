@@ -53,8 +53,8 @@ class OrderScreen extends Component {
 
     addDetail(){
         const details = this.props.detailData;
-        console.log('selectedProduct', this.state.selectedProduct);
-        if(this.state.isReseller){
+        console.log('isReseller', this.props.modalData.isReseller);
+        if(this.props.modalData.isReseller){
             const item = {
                 idProduct: this.state.selectedProduct.value.idProduct,
                 productName: this.state.selectedProduct.value.productName,
