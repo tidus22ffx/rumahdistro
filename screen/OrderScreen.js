@@ -27,7 +27,8 @@ const initial_state={
     selectedProduct: null,
     inputQty: 0,
     popupOpen: false,
-    promptDelete: false
+    promptDelete: false,
+    diskonKhusus: 0,
 }
 
 class OrderScreen extends Component {
@@ -53,23 +54,27 @@ class OrderScreen extends Component {
 
     addDetail(){
         const details = this.props.detailData;
-        console.log('isReseller', this.props.modalData.isReseller);
+        const {selectedProduct, inputQty, diskonKhusus} = this.state;
+        console.log('isReseller', selectedProduct);
         if(this.props.modalData.isReseller){
+            const cumulativeDisc = inputQty * diskonKhusus;
             const item = {
-                idProduct: this.state.selectedProduct.value.idProduct,
-                productName: this.state.selectedProduct.value.productName,
-                price: this.state.selectedProduct.value.sellerPrice,
-                qty: this.state.inputQty,
-                subtotal: (this.state.selectedProduct.value.productPrice * this.state.inputQty) 
+                idProduct: selectedProduct.value.idProduct,
+                productName: selectedProduct.value.productName,
+                price: selectedProduct.value.sellerPrice,
+                qty: inputQty,
+                diskonKhusus: diskonKhusus,
+                subtotal: (selectedProduct.value.sellerPrice * inputQty) - cumulativeDisc,
             };
             details.push(item);
         } else {
             const item = {
-                idProduct: this.state.selectedProduct.value.idProduct,
-                productName: this.state.selectedProduct.value.productName,
-                price: this.state.selectedProduct.value.normalPrice,
-                qty: this.state.inputQty,
-                subtotal: (this.state.selectedProduct.value.normalPrice * this.state.inputQty) 
+                idProduct: selectedProduct.value.idProduct,
+                productName: selectedProduct.value.productName,
+                price: selectedProduct.value.normalPrice,
+                qty: inputQty,
+                diskonKhusus: 0,
+                subtotal: (selectedProduct.value.normalPrice * inputQty) 
             };
             details.push(item);
         }
@@ -201,7 +206,7 @@ class OrderScreen extends Component {
     render(){
         return(
             <Dashboard 
-                modalWidth = '50%'
+                modalWidth = '60%'
                 modalContent={<OrderPopup 
                     modalData={this.props.modalData} 
                     modalFunction={(modalForm) => this.setModalState(modalForm)}
@@ -211,6 +216,8 @@ class OrderScreen extends Component {
                     selectProduct={(product) => {console.log(product);this.setState({selectedProduct:product})}}
                     inputedQty={this.state.inputQty}
                     inputQty={(value) => this.inputQuantity(value)}
+                    diskonKhusus={this.state.diskonKhusus}
+                    inputDiskonKhusus={(value) => this.setState({diskonKhusus: value})}
                     saveAction={() => this.saveButton()}
                     loading={this.props.saveLoading}
                     error={this.props.error}

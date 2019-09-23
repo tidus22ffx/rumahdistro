@@ -55,11 +55,13 @@ const loadAllOrderSuccess = (dispatch, payload, index) => {
         value: item.reseller
       }
     }
+    let cumulativeDisc = 0;
+    item.orderDetails.map((detail) => cumulativeDisc += (detail.diskonKhusus * detail.qty));  
     const object = {
       idOrderH: item.idOrderH,
       orderDate: new Date(item.orderDate).toLocaleDateString('id-ID'),
       tujuan: tujuan,
-      price: item.totalPrice + item.discount,
+      price: (item.totalPrice + item.discount) + cumulativeDisc,
       netPrice: item.totalPrice,
       status: item.status,
     };
@@ -87,12 +89,14 @@ export const loadOrderById = (object) => {
     .then(response =>{ 
         const data = response.data.datas;
         const detail = data.orderDetails.map(item => {
+          const cumulativeDisc = item.qty * item.diskonKhusus;
             return {
                 idProduct: item.idProduct,
                 productName: item.product.productName,
                 price: data.jenisOrder > 0 ? item.product.sellerPrice : item.product.productPrice,
                 qty: item.qty,
-                subtotal: (data.jenisOrder > 0 ? item.product.sellerPrice : item.product.productPrice) * item.qty
+                diskonKhusus: item.diskonKhusus,
+                subtotal: ((data.jenisOrder > 0 ? item.product.sellerPrice : item.product.productPrice) * item.qty) - cumulativeDisc
             }
         })
         console.log('detailOrder', detail);
@@ -110,7 +114,8 @@ export const saveOrder = (details, header, user) => {
     return {
       idProduct: item.idProduct,
       info: '',
-      qty: parseInt(item.qty)
+      qty: parseInt(item.qty),
+      diskonKhusus: parseInt(item.diskonKhusus)
     }
   });
   const body = {

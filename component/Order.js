@@ -88,6 +88,8 @@ export const OrderPopup = ({
     promptDelete,
     deleteMessage,
     deleteFunction,
+    diskonKhusus,
+    inputDiskonKhusus
     }) => {
 
     const setOrderDate = (item) => {
@@ -171,6 +173,7 @@ export const OrderPopup = ({
                     <div style={{flex: 4, paddingLeft: 5, borderLeft: '0.5px solid' }}>{item.productName}</div>
                     <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.price)}</div>
                     <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatNumber(item.qty)}</div>
+                    <div style={{flex: 2, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatNumber(item.diskonKhusus)}</div>
                     <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>{formatCurrency(item.subtotal)}</div>
                     <div style={{flex: 1, }}>
                         <button onClick={() => removeDetail(index)}>
@@ -269,10 +272,12 @@ export const OrderPopup = ({
             </div>
             {renderBuyerField()}
             <div style={styles.detailArea}>
-                <ComboBox width='30%' selectedOption={selectedProduct} onChange={(item) => selectProduct(item)} label='Produk' placeholder='Pilih Produk' options={products} />
-                <div style={{width:'5%'}}></div>
-                <FormInput width='25%' type='number' readonly={selectedProduct === null ? true : false} value={inputedQty} onChangeText={(value) => inputQty(value.target.value)} label='Qty' placeholder='Masukkan jumlah unit' />
-                <div style={{width:'5%'}}></div>
+                <ComboBox width='25%' selectedOption={selectedProduct} onChange={(item) => selectProduct(item)} label='Produk' placeholder='Pilih Produk' options={products} />
+                <div style={{width:'2%'}}></div>
+                <FormInput width='20%' type='number' readonly={selectedProduct === null ? true : false} value={inputedQty} onChangeText={(value) => inputQty(value.target.value)} label='Qty' placeholder='Masukkan jumlah unit' />
+                <div style={{width:'2%'}}></div>
+                <MoneyInput width='20%' type='number' readonly={selectedProduct === null ? true : false} value={diskonKhusus} onChangeText={(value) => inputDiskonKhusus(value)} label='Diskon Khusus' placeholder='0' />
+                <div style={{width:'2%'}}></div>
                 <ButtonTransparent onClick={() => addDetail()} height={25} width='10%' className={'buttonTransparent'}>Add</ButtonTransparent>
             </div>
             <div style={styles.detailBox}>
@@ -281,6 +286,7 @@ export const OrderPopup = ({
                     <div style={{flex: 4, paddingLeft: 5, borderLeft: '0.5px solid' }}>Nama Produk</div>
                     <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>Harga</div>
                     <div style={{flex: 1.5, paddingLeft: 5, borderLeft: '0.5px solid' }}>Jumlah</div>
+                    <div style={{flex: 2, paddingLeft: 5, borderLeft: '0.5px solid' }}>Disc. Khusus</div>
                     <div style={{flex: 3, paddingLeft: 5, borderLeft: '0.5px solid' }}>Subtotal</div>
                     <div style={{flex: 1, }}>{' '}</div>
                 </div>
