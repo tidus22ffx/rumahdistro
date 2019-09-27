@@ -11,7 +11,7 @@ resetOrder,
 saveOrder,
 orderValidationError,
 loadOrderById,
-deleteOrder
+deleteOrder,
 } from '../actions';
 import Dashboard from './Dashboard';
 import { OrderContent, OrderPopup } from '../component/Order';
@@ -29,6 +29,7 @@ const initial_state={
     popupOpen: false,
     promptDelete: false,
     diskonKhusus: 0,
+    filterDate: null,
 }
 
 class OrderScreen extends Component {
@@ -122,6 +123,17 @@ class OrderScreen extends Component {
     togglePopup(status){
         this.reset();
         this.setState({popupOpen: status});
+    }
+
+    filterByDate(date){
+        this.setState({filterDate: date});
+        let d;
+        if(date === null){
+            d = null;
+        } else {
+            d = new Date(date).getTime();
+        }
+        this.props.loadAllOrder(1, d);
     }
 
     validation(){
@@ -231,11 +243,14 @@ class OrderScreen extends Component {
                 viewContent={<OrderContent 
                     data={this.props.orderList}
                     paging={this.renderPagination(this.props.pages, this.props.currentPage)}
-                    pageFunction={(index) => this.props.loadAllOrder(index)}
+                    pageFunction={(index) => this.props.loadAllOrder(index, this.state.filterDate)}
                     currentPage={this.props.currentPage}
                     popupState={this.props.popupState}
                     loading={this.props.loading}
                     viewItem={(item) => this.viewItem(item)}
+                    filterDate={this.state.filterDate}
+                    clearSearch={() => this.filterByDate(null)}
+                    changeFilterDate={(date) => this.filterByDate(date)}
                 />}
                 popupOpen={this.state.popupOpen}
                 toggle={(status) => this.togglePopup(status)}
@@ -260,5 +275,5 @@ export default connect(mapStateToProps, {
     saveOrder,
     orderValidationError,
     loadOrderById,
-    deleteOrder
+    deleteOrder,
 })(OrderScreen);

@@ -44,22 +44,24 @@ const loadAllUserFail = (dispatch, data) => {
     })
 }
 
-export const loadAllOperational = (index) => {
+export const loadAllOperational = (index, timeStamp = null) => {
     return (dispatch) => {
         dispatch({ type: 'LOAD_OPERATIONAL' });
-        axios.get(`http://localhost:8088/RDSdev/operationalH/getAllOperationalH/${index-1}`)
+        const searchUrl = `http://localhost:8088/RDSdev/operationalH/getAllOperationalHSearch/${timeStamp}/${index-1}`;
+        const loadAllUrl = `http://localhost:8088/RDSdev/operationalH/getAllOperationalH/${index-1}`;
+        const url = timeStamp !== null ? searchUrl : loadAllUrl;
+        axios.get(url)
         .then(response => {
           const data = response.data;
           if (data.status === 200) {
-            console.log('success', data);
+            loadAllOperationalSuccess(dispatch, data, index);
+          } else if (data.status === 202) {
             loadAllOperationalSuccess(dispatch, data, index);
           } else {
-            console.log('fail');
             loadAllOperationalFail(dispatch, 'Data tidak ada');
           }
         })
         .catch(err => {
-          console.log(err);
           loadAllOperationalFail(dispatch, err.toString());
         });
     }
@@ -157,7 +159,7 @@ const formatDate = (date) => {
         mm = '0'+mm
     } 
 
-    today = mm + '/' + dd + '/' + yyyy;
+    today = dd + '/' + mm + '/' + yyyy;
     return today;
 }
 

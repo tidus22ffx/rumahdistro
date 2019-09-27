@@ -28,7 +28,8 @@ WebFont.load({
 
 const initial_state={
     popupOpen: false,
-    promptDelete: false
+    promptDelete: false,
+    filterDate: null,
 }
 
 class RejectScreen extends Component {
@@ -75,6 +76,17 @@ class RejectScreen extends Component {
 
     deleteItem(){
         this.props.deleteReject(this.props.modalData);
+    }
+
+    filterByDate(date){
+        this.setState({filterDate: date});
+        let d;
+        if(date === null){
+            d = null;
+        } else {
+            d = new Date(date).getTime();
+        }
+        this.props.loadReject(1, d);
     }
 
     saveButton(){
@@ -151,11 +163,14 @@ class RejectScreen extends Component {
                 />} 
                 viewContent={<RejectionContent 
                     paging={this.renderPagination(this.props.pages, this.props.currentPage)}
-                    pageFunction={(index) => this.props.loadReject(index)}
+                    pageFunction={(index) => this.props.loadReject(index, this.state.filterDate)}
                     data={this.props.rejectionList}
                     popupState={this.props.popupState}
                     loading={this.props.loading}
                     viewItem={(item) => this.viewItem(item)}
+                    filterDate={this.state.filterDate}
+                    clearSearch={() => this.filterByDate(null)}
+                    changeFilterDate={(date) => this.filterByDate(date)}
                 />}
                 popupOpen={this.state.popupOpen}
                 toggle={(status) => this.togglePopup(status)}

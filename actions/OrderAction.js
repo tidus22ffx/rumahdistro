@@ -14,15 +14,21 @@ export const getImgurToken = () => {
   }
 }
 
-export const loadAllOrder = (index) => {
+export const loadAllOrder = (index, timeStamp = null) => {
     return (dispatch) => {
         dispatch({ type: 'LOAD_ALL_ORDER' });
         //console.log(API_GET_CUSTOMER);
-        axios.get(`http://localhost:8088/RDSdev/orderH/getAllOrderH/${index-1}`)
+        const searchUrl = `http://localhost:8088/RDSdev/orderH/getAllOrderHSearch/${timeStamp}/${index-1}`;
+        const loadAllUrl = `http://localhost:8088/RDSdev/orderH/getAllOrderH/${index-1}`
+        const url = timeStamp !== null ? searchUrl : loadAllUrl;
+        axios.get(url)
         .then(response => {
           const data = response.data;
           if (data.status === 200) {
-            console.log('success', data);
+            console.log(data);
+            loadAllOrderSuccess(dispatch, data, index);
+          } else if (data.status === 202) {
+            console.log(data);
             loadAllOrderSuccess(dispatch, data, index);
           } else {
             console.log('fail', data);

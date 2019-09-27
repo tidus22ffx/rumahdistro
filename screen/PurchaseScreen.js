@@ -26,6 +26,7 @@ const initial_state={
     inputQty: 0,
     popupOpen: false,
     promptDelete: false,
+    filterDate: null,
 }
 
 class PurchaseScreen extends Component {
@@ -104,6 +105,17 @@ class PurchaseScreen extends Component {
 
     deleteItem(){
         this.props.deletePurchase(this.props.modalData);
+    }
+
+    filterByDate(date){
+        this.setState({filterDate: date});
+        let d;
+        if(date === null){
+            d = null;
+        } else {
+            d = new Date(date).getTime();
+        }
+        this.props.loadAllPurchases(1, d);
     }
 
     saveButton(){
@@ -189,11 +201,14 @@ class PurchaseScreen extends Component {
                 viewContent={<PurchaseContent 
                     data={this.props.purchaseList}
                     paging={this.renderPagination(this.props.pages, this.props.currentPage)}
-                    pageFunction={(index) => this.props.loadAllPurchases(index)}
+                    pageFunction={(index) => this.props.loadAllPurchases(index, this.state.filterDate)}
                     currentPage={this.props.currentPage}
                     popupState={this.props.popupState}
                     loading={this.props.loading}
                     viewItem={(item) => this.viewItem(item)}
+                    filterDate={this.state.filterDate}
+                    clearSearch={() => this.filterByDate(null)}
+                    changeFilterDate={(date) => this.filterByDate(date)}
                 />}
                 popupOpen={this.state.popupOpen}
                 toggle={(status) => this.togglePopup(status)}

@@ -38,13 +38,18 @@ export const loadProduct = () => {
     } 
 }
 
-export const loadReject = (index) => {
+export const loadReject = (index, timeStamp = null) => {
     return (dispatch) => {
         dispatch({ type: 'loadReject' });
-        axios.get(`http://localhost:8088/RDSdev/reject/getAllReject/${index-1}`)
+        const searchUrl = `http://localhost:8088/RDSdev/reject/getAllRejectSearch/${timeStamp}/${index-1}`;
+        const loadAllUrl = `http://localhost:8088/RDSdev/reject/getAllReject/${index-1}`
+        const url = timeStamp !== null ? searchUrl : loadAllUrl;
+        axios.get(url)
         .then(response => {
           const data = response.data;
           if (data.status === 200) {
+            loadRejectSuccess(dispatch, data, index);
+          } else if (data.status === 202) {
             loadRejectSuccess(dispatch, data, index);
           } else {
               loadRejectFail(dispatch, data.message);

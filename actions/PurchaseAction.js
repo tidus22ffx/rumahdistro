@@ -21,13 +21,19 @@ export const loadAllProduct = () => {
     }
 }
 
-export const loadAllPurchases = (index) => {
+export const loadAllPurchases = (index, timeStamp = null) => {
     return (dispatch) => {
         dispatch({ type: 'LOAD_PURCHASE' });
-        axios.get(`http://localhost:8088/RDSdev/purchaseH/getAllPurchaseH/${index-1}`)
+        const searchUrl = `http://localhost:8088/RDSdev/purchaseH/getAllPurchaseHSearch/${timeStamp}/${index-1}`;
+        const loadAllUrl = `http://localhost:8088/RDSdev/purchaseH/getAllPurchaseH/${index-1}`;
+        const url = timeStamp !== null ? searchUrl : loadAllUrl;
+        axios.get(url)
         .then(response => {
           const data = response.data;
           if (data.status === 200) {
+            console.log('success', data);
+            loadPurchaseSuccess(dispatch, data, index);
+          } else if (data.status === 202) {
             console.log('success', data);
             loadPurchaseSuccess(dispatch, data, index);
           } else {

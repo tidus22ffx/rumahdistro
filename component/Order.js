@@ -9,7 +9,10 @@ export const OrderContent = ({
     data, 
     paging,
     pageFunction,
-    viewItem
+    viewItem,
+    filterDate,
+    changeFilterDate,
+    clearSearch
     }) => {
 
     const header = ['Kode', 'Tanggal', 'Tujuan', 'Harga', 'Total', 'Status']; 
@@ -59,6 +62,23 @@ export const OrderContent = ({
                 <div style={{borderBottom: '3px solid #c39243'}}>
                     Transaksi Penjualan 
                 </div>
+            </div>
+            <div style={styles.searchContainer}>
+                <div style={styles.filterText}>Filter</div>
+                <FormDatePicker 
+                    label=""
+                    selected={filterDate}
+                    onChange={changeFilterDate}
+                    width='15%'
+                />
+                <ButtonTransparent 
+                    width='5%' 
+                    style={{margin: 3, marginLeft: 15, height: 30,}} 
+                    className='buttonTransparent'
+                    onClick={clearSearch}
+                >
+                    Clear
+                </ButtonTransparent>
             </div>
             <div style={styles.listContainer}>
                 <div style={{fontSize: 24, fontWeight: 400, color: '#c39243', fontFamily: 'Titillium Web'}}>Daftar Penjualan</div>
@@ -376,7 +396,7 @@ const styles = {
     },
     listContainer: {
         width: '100%',
-        paddingTop: 25,
+        paddingTop: 5,
         borderBottom: '1px solid #e3e3e3', 
         overflow: 'hidden'
     },
@@ -462,7 +482,20 @@ const styles = {
     pagingContainer: {
         fontSize: 12,
         display: 'flex',
-        flexDirection: 'row',
-        
+        flexDirection: 'row',    
+    },
+    searchContainer: {
+        height: '3%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+    }, 
+    filterText: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginVertical: 10,
+        width: 60,
     }
 }
