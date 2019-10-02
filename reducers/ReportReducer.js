@@ -21,8 +21,13 @@ const INITIAL_STATE = {
     dataset: [],
     loading: false,
     userList: [],
+    productList: [],
     selectedUser: {
         label: 'Semua',
+        value: null,
+    },
+    selectedProduct: {
+        label: '',
         value: null,
     }
 }
@@ -49,6 +54,10 @@ const ReportReducer = (state = INITIAL_STATE, action) => {
             return { ...state, loading: true };
         case 'GET_REJECT_REPORT_SUCCESS':
             return { ...state, loading: false, reportData: action.payload };
+        case 'GET_MONTHLY_STOCK_REPORT':
+            return { ...state, loading: true };
+        case 'GET_STOCK_REPORT_SUCCESS':
+            return { ...state, loading: false, reportData: action.payload };
         case 'LOAD_USER_REPORT':
             return { ...state, loading: true };
         case 'LOAD_USER_REPORT_SUCCESS':
@@ -60,7 +69,13 @@ const ReportReducer = (state = INITIAL_STATE, action) => {
         case 'SET_MONTH':
             return { ...state, month: action.payload };
         case 'SET_YEAR':
-            return { ...state, year: action.payload };             
+            return { ...state, year: action.payload };
+        case 'LOAD_PRODUCT_REPORT':
+            return { ...state, loading: true };
+        case 'LOAD_PRODUCT_REPORT_SUCCESS':
+            return { ...state, loading: false, productList: action.payload };
+        case 'SELECT_PRODUCT_REPORT':
+            return { ...state, selectedProduct: action.payload };
         default:
             return state;
     }

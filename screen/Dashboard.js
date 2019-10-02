@@ -129,6 +129,9 @@ class Dashboard extends Component {
                         <div className='childMenuStyle' style={this.state.laporanOpen ? null : styles.hide } onClick={() => history.push('/RejectReport')}>
                             Barang Reject
                         </div>
+                        <div className='childMenuStyle' style={this.state.laporanOpen ? null : styles.hide } onClick={() => history.push('/MonthlyStockReport')}>
+                            Stock Audit
+                        </div>
                     </div>
                     <div style={styles.contentStyle}>
                         {viewContent}
@@ -176,7 +179,7 @@ const styles = {
         backgroundColor: '#333333',
         borderRight: '0.5px solid',
         borderColor: '#393939',
-        paddingTop: 25,
+        paddingTop: 0,
     },
     contentStyle: {
         flex: 6,
@@ -229,7 +232,7 @@ const styles = {
         alignItems: 'center',
         height: 28,
         paddingLeft: 5,
-        marginTop: 15,
+        marginTop: 10,
         marginBottom: 10,
         borderBottom: '2px #e3e3e3 solid',
         paddingRight: 5,

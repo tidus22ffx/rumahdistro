@@ -224,3 +224,59 @@ export const setReportYear = (year) => {
         payload: year,
     })
 }
+
+export const getMonthlyStockReport = (year, month, product) => {
+    return (dispatch) => {
+        dispatch({ type: 'GET_MONTHLY_STOCK_REPORT'});
+        axios.get('http://localhost:8088/RDSdev/stock/daily/' + year + '/' + month + '/' + product)
+        .then((response) => {
+            console.log(response);
+            const data = response.data;
+            getStockReportSuccess(dispatch, data.datas, month, year);
+        }).catch((error) => {
+            console.log(error.response);
+        })
+    }
+}
+
+const getStockReportSuccess = (dispatch, data) => {
+    dispatch({
+        type: 'GET_STOCK_REPORT_SUCCESS',
+        payload: data,
+    })
+}
+
+export const loadProductReport = () => {
+    return (dispatch) => {
+        dispatch({ type: 'LOAD_PRODUCT_REPORT'});
+        axios.get(`http://localhost:8088/RDSdev/product/getAllProduct`)
+        .then(response => {
+            const data = response.data;
+            loadProductSuccess(dispatch, data.datas);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      };
+}
+
+const loadProductSuccess = (dispatch, data) => {
+    const combo = () => data.map((item) => {
+      return {
+        label: item.productName,
+        value: item,
+      };
+    })
+  
+    dispatch({
+      type: 'LOAD_PRODUCT_REPORT_SUCCESS',
+      payload: combo(),
+    })
+}
+
+export const selectProductReport = (item) => {
+    return {
+        type: 'SELECT_PRODUCT_REPORT',
+        payload: item,
+    }
+}

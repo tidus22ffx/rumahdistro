@@ -219,7 +219,7 @@ class Report extends Component {
         } else if (chartType === 'pie') {
             return null;
         } else {
-            return null;
+            return (<div />);
         }
     }
 

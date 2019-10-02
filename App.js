@@ -18,6 +18,7 @@ import MonthlyReport from './screen/MonthlyReport';
 import DailyReport from './screen/DailyReport';
 import OperationalReport from './screen/MonthlyOperationalReport';
 import RejectReport from './screen/RejectReport';
+import MonthlyStockReport from './screen/MonthlyStockReport';
 
 class App extends Component {
   render() {
@@ -39,6 +40,7 @@ class App extends Component {
             <Route path="/DailyReport" component={DailyReport} />
             <Route path="/OperationalReport" component={OperationalReport} />
             <Route path="/RejectReport" component={RejectReport} />
+            <Route path="/MonthlyStockReport" component={MonthlyStockReport} />
           </Switch>
         </BrowserRouter>
       </Provider>
