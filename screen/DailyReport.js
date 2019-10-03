@@ -98,7 +98,7 @@ class DailyReport extends Component {
             // omset += item.omset;
             cumulativeDiscount += (item.diskonKhusus * item.qty);
             omset += hargaBersih;
-            modal += (item.hargaBeli * qty);
+            modal += (item.hargaBeli * item.qty);
 
             return (
                 <div style={tableRow}>
@@ -131,6 +131,12 @@ class DailyReport extends Component {
                 </div>
                 <div style={footerOuterContent} >
                     <div style={footerContent}>
+                        <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 5.6 }}>Total Diskon Khusus</div>
+                        <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(cumulativeDiscount)}</div>
+                    </div>
+                </div>
+                <div style={{...footerOuterContent, marginTop: 0}} >
+                    <div style={footerContent}>
                         <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 5.6 }}>Omset</div>
                         <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(omset)}</div>
                     </div>
@@ -141,10 +147,6 @@ class DailyReport extends Component {
                         {/* <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.4 }}>{formatNumber(qty)}</div> */}
                         {/* <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(omset)}</div> */}
                         {/* <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(laba)}</div> */}
-                    </div>
-                    <div style={footerContent}>
-                        <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 5.6 }}>Total Diskon Khusus</div>
-                        <div style={{ fontWeight: 'bold', color: '#333333', fontSize: 14, flex: 0.8 }}>{formatCurrency(cumulativeDiscount)}</div>
                     </div>
                 </div>
                 <div style={footerOuterContent}>
@@ -177,7 +179,7 @@ class DailyReport extends Component {
                     <Report 
                         headerText={`Laporan Harian Tanggal ${date.value} ${months[month.value]} ${year.value}`}
                         control={['year', 'month', 'date', resellerPicker]}
-                        search={() => this.props.getDailyReport(year.value, month.value, date.value)}
+                        search={() => this.props.getDailyReport(year.value, month.value, date.value, this.props.selectedUser)}
                         loading={loading}
                         date={date}
                         setDate={(value) => this.props.setReportDate(value)}

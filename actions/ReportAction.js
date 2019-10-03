@@ -100,7 +100,7 @@ export const getDailyReport = (
     let idReseller = '';
     console.log({ reseller });
     if(reseller.value){
-        idReseller = '/' + reseller.value;
+        idReseller = '/' + reseller.value.idUser;
     }
     return (dispatch) => {
         dispatch({ type: 'GET_DAILY_REPORT'});
@@ -144,6 +144,7 @@ const loadUserSuccess = (dispatch, data) => {
 }
 
 export const selectUserReport = (item) => {
+    console.log(item);
     return {
         type: 'SELECT_USER_REPORT',
         payload: item,
