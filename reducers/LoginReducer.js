@@ -14,11 +14,13 @@ const LoginReducer = (state = INITIAL_STATE, action) => {
         case 'loginSuccess':
             return {...state, loading: false, userData: action.payload, loggedIn: true, error: null};
         case 'loginFail':
-            return {...state, loading: false, error: null};    
+            return {...state, loading: false, error: action.payload};    
         case 'username_text_change':
             return {...state, username: action.payload};    
         case 'password_text_change':
-            return {...state, password: action.payload};    
+            return {...state, password: action.payload};
+        case 'user_logout':
+            return INITIAL_STATE;    
         default:
             return state;
     }

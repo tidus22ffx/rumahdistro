@@ -13,10 +13,12 @@ class LoginScreen extends Component {
     buttonClicked: false
   }
   componentWillMount(){
+    console.log(this.props);
     this.setState({height: window.innerHeight});
   }
 
   componentWillUpdate(){
+    console.log('bangsat', this.props.loggedIn);
     if(this.props.loggedIn){
       return(
         this.props.history.push(`/Home`)
@@ -65,6 +67,13 @@ class LoginScreen extends Component {
     )
   }
 
+  renderError(){
+    if(this.props.error){
+      return <div style={styles.errorText}>{this.props.error}</div>
+    } else {
+      return <div style={styles.errorText}></div>
+    }
+  }
 
   render() {
     const { wrapperStyle, bodyStyle, logoContainer, logoStyle } = styles;
@@ -82,6 +91,7 @@ class LoginScreen extends Component {
                     <div style={{height: 10}}></div>
                     <TextInput type='password' width='80%' icon={FaLock} value={this.props.password} onChangeText={this.onChangeTextPassword.bind(this)} placeholder='Password' />
                     <div style={{height: 20}}></div>
+                    {this.renderError()}
                     {this.renderButton()}
                 </CardView>
             </div>
@@ -155,6 +165,14 @@ const styles = {
     color: '#f8f8f8',
     fontSize: 16,
     width: '85%'
+  },
+  errorText: {
+    color: 'red',
+    fontFamily: 'Titillium Web',
+    fontSize: 14,
+    width: 'auto',
+    height: 'auto',
+    fontWeight: '400'
   } 
 }
   

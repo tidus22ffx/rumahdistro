@@ -19,6 +19,7 @@ import DailyReport from './screen/DailyReport';
 import OperationalReport from './screen/MonthlyOperationalReport';
 import RejectReport from './screen/RejectReport';
 import MonthlyStockReport from './screen/MonthlyStockReport';
+import RedirectScreen from './screen/RedirectScreen';
 
 class App extends Component {
   render() {
@@ -26,7 +27,8 @@ class App extends Component {
       <Provider store={Store}>
         <BrowserRouter>
           <Switch>
-            <Route path="/" component={LoginScreen} exact />
+            <Route path="/" component={RedirectScreen} exact />
+            <Route path="/Login" component={LoginScreen} />
             <Route path="/Home" component={HomeScreen} />
             <Route path="/Product" component={ProductScreen} />
             <Route path="/Category" component={CategoryScreen} />

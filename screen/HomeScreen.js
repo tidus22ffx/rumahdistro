@@ -143,8 +143,8 @@ class HomeScreen extends Component {
     }
 }
 
-const mapStateToProps = ({rejectData}) => {
-    return rejectData;
+const mapStateToProps = ({rejectData, loginData}) => {
+    return {...rejectData, loginData};
 }
 
 export default connect(mapStateToProps, {

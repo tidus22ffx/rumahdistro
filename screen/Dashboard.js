@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { PopupMenu } from '../component/common';
-import { FaPlus, FaCaretDown, FaCaretUp } from 'react-icons/fa';
+import { FaPlus, FaCaretDown, FaCaretUp, FaPowerOff } from 'react-icons/fa';
 import { logoIndisuf, logoIndisufText } from '../assets/image';
 import { RejectionContent, RejectionPopup} from '../component/Rejection';
+import {logout} from '../actions';
 import '../css/Dashboard.css';
 
 class Dashboard extends Component {
@@ -44,6 +45,23 @@ class Dashboard extends Component {
         }
     }
 
+    logout(){
+        // const rawdata = sessionStorage.getItem('userData');
+        // const data = JSON.parse(rawdata);
+        // console.log('userdata', data);
+        sessionStorage.setItem('userData', null);
+        this.props.history.push('/Login')
+    }
+
+    checkUserData(){
+        const rawdata = sessionStorage.getItem('userData');
+        const data = JSON.parse(rawdata);
+        console.log(data);
+        if(!data.loggedIn){
+            this.logout();
+        }
+    }
+
     render() {
         //props Rejection content dari homescreen.js berupa listview
         console.log(this.state);
@@ -52,12 +70,26 @@ class Dashboard extends Component {
             <div style={styles.globalWrapper}>
                 {this.renderPopup()}
                 <div style={styles.headContainer}>
-                    <div style={styles.logo} className='logoIndisuf' onClick={() => history.push('/Home')}>
+                    <div style={styles.logo} className='logoIndisuf' onClick={() => history.push('/Login')}>
                         <div style={styles.logoContainer}>
                             <img src={logoIndisuf} style={styles.logoStyle}/>
                         </div>
                         <div style={styles.logoContainer}>
                             <img src={logoIndisufText} style={styles.logoTextStyle}/>
+                        </div>
+                        <div style={{
+                            display: 'flex',
+                            flex: 1,
+                            justifyContent: 'flex-end',
+                            alignItems: 'flex-end',
+                            paddingRight: 15
+                        }}>
+                            <div onClick={() => history.push('/Login')}>
+                                <FaPowerOff 
+                                    size={16} 
+                                    color='#f1f1f1' 
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

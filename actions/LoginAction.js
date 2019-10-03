@@ -15,13 +15,10 @@ export const login = (userid, password) => {
         })
         .then(response => {
           const data = response.data;
-          console.log(response);
           if (data.status === 1) {
-            console.log('success');
             loginSuccess(dispatch, data);
           } else {
-            console.log('fail');
-            loginFail(dispatch, 'Invalid Credential');
+            loginFail(dispatch, 'Username atau password salah');
           }
         })
         .catch(err => {
@@ -40,7 +37,6 @@ const loginFail = (dispatch, message) => {
 }
 
 export const passwordTextChange = (text) => {
-  
   return {
     type: 'password_text_change',
     payload: text,
@@ -51,5 +47,11 @@ export const usernameTextChange = (text) => {
   return {
     type: 'username_text_change',
     payload: text,
+  }
+}
+
+export const logout = () => {
+  return {
+    type: 'user_logout'
   }
 }
