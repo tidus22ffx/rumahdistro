@@ -15,7 +15,7 @@ export const RejectionContent = ({
     clearSearch
     }) => {
     //array header untuk kolom dari listview
-    const header = ['id', 'Tanggal Input', 'Product', 'Qty', 'status'] 
+    const header = ['id', 'Product', 'Qty'] 
     const nullify = () => {
         return null;
     }
@@ -109,7 +109,8 @@ transaksi,
 promptDelete,
 deleteMessage,
 deleteFunction, 
-products}) =>{
+products,
+editMode = false }) =>{
     const setTransaksi = (item) => {
         const modalForm = { 
             ...modalData,
@@ -176,28 +177,53 @@ products}) =>{
             return <div style={styles.error}>{error}</div>;
         }
     }
+    console.log({editMode});
 
     const rejectTypeOption = [
-        {
-            value: 1,
-            label: 'Diproses',
-        },
-        {
-            value: 2,
-            label: 'Dihibahkan',
-        },
-        {
-            value: 3,
-            label: 'Diretur',
-        }
-    ]
+        { value: 1, label: 'Diproses' },
+        { value: 2, label: 'Dihibahkan' },
+        { value: 3, label: 'Diretur' }
+    ];
+
+    const rejectTypeOptionEditMode = [
+        { value: 2, label: 'Dihibahkan' },
+        { value: 3, label: 'Diretur' }
+    ];
+
     return (
         <div style={styles.popupContent}>
-            <FormInput width='80%' value={modalData.rejectId} readonly label='Kode Reject' placeholder='Kode Otomatis' />
-            <FormDatePicker width='80%' selected={modalData.rejectDate} onChange={(date) => setRejectDate(date)} label='Tanggal Input' />
-            <ComboBox width='80%' selectedOption={modalData.product} onChange={(item) => setProduct(item)} label='Product' placeholder='Pilih Product' options={products}/>
-            <FormInput width='80%' readonly={modalData.product === null ? true : false} value={modalData.qty} onChangeText={(value) => setQty(value.target.value)} label='Qty' placeholder='Masukkan jumlah unit' />
-            <ComboBox width='80%' selectedOption={modalData.status} onChange={(item) => setStatus(item)} label='Jenis Reject' placeholder='Pilih Salah satu' options={rejectTypeOption}/>
+            <FormInput 
+                width='80%' 
+                value={modalData.rejectId} 
+                readonly label='Kode Reject' 
+                placeholder='Kode Otomatis' />
+            <FormDatePicker 
+                width='80%' 
+                selected={modalData.rejectDate} 
+                onChange={(date) => setRejectDate(date)} 
+                label='Tanggal Input' />
+            <ComboBox 
+                width='80%' 
+                disabled={editMode ? true : false} 
+                selectedOption={modalData.product} 
+                onChange={(item) => setProduct(item)} 
+                label='Product' 
+                placeholder='Pilih Product' 
+                options={products}/>
+            <FormInput 
+                width='80%' 
+                readonly={modalData.product === null ? true : false} 
+                value={modalData.qty} 
+                onChangeText={(value) => setQty(value.target.value)} 
+                label='Qty' 
+                placeholder='Masukkan jumlah unit' />
+            <ComboBox 
+                width='80%' 
+                selectedOption={modalData.status} 
+                onChange={(item) => setStatus(item)} 
+                label='Jenis Reject' 
+                placeholder='Pilih Salah satu' 
+                options={editMode ? rejectTypeOptionEditMode : rejectTypeOption }/>
             {showError()}
             <div style={{ marginTop: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 {renderButton()}

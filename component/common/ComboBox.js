@@ -2,7 +2,16 @@ import React from 'react';
 import Select from 'react-select';
 import '../../css/input.css';
 
-export const ComboBox = ({width, placeholder, selectedOption=null, options, style, label, onChange=null}) => {
+export const ComboBox = ({
+    disabled,
+    width, 
+    placeholder, 
+    selectedOption=null, 
+    options, 
+    style, 
+    label, 
+    onChange=null }) => {
+
     const opt = () => {
         if(options===null){
             return [
@@ -25,6 +34,7 @@ export const ComboBox = ({width, placeholder, selectedOption=null, options, styl
                     options={opt()}
                     value={selectedOption} 
                     styles={styles.inputStyle} 
+                    isDisabled={disabled}
                     onChange={(item) => onChange(item)} />
             </div>
         </div>

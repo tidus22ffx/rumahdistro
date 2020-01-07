@@ -9,6 +9,7 @@ saveRejection,
 resetRejection,
 rejectValidationError,
 resetRejectionPopup,
+getProductData,
 setModalState } from '../actions';
 import Dashboard from './Dashboard';
 import { RejectionContent, RejectionPopup } from '../component/Rejection';
@@ -30,6 +31,7 @@ const initial_state={
     popupOpen: false,
     promptDelete: false,
     filterDate: null,
+    editMode: false,
 }
 
 class RejectScreen extends Component {
@@ -47,13 +49,15 @@ class RejectScreen extends Component {
             this.setState({popupOpen: false})
             this.props.resetRejection();
             console.log(this.state);
+            this.props.loadProduct();
             this.props.loadReject(1);
         }
     }
 
     viewItem(item) {
-        this.props.loadRejectById(item);
         this.togglePopup(true);
+        this.props.getProductData(item);
+        this.setState({ editMode: true });
     }
 
     setModalState(modalForm){
@@ -61,6 +65,7 @@ class RejectScreen extends Component {
     }
 
     togglePopup(status){
+        this.setState({ editMode: false });
         this.props.resetRejectionPopup();
         this.setState({popupOpen: status});
     }
@@ -90,7 +95,6 @@ class RejectScreen extends Component {
     }
 
     saveButton(){
-        //console.log(this.props.location);
         if(this.validation()){
             this.props.saveRejection(this.props.modalData, 0);
         }
@@ -160,12 +164,12 @@ class RejectScreen extends Component {
                     deleteFunction={() => this.deleteItem()}
                     promptDelete={this.state.promptDelete}
                     deleteMessage={(val) => this.setState({ promptDelete: val})}
+                    editMode={this.state.editMode}
                 />} 
                 viewContent={<RejectionContent 
                     paging={this.renderPagination(this.props.pages, this.props.currentPage)}
                     pageFunction={(index) => this.props.loadReject(index, this.state.filterDate)}
                     data={this.props.rejectionList}
-                    popupState={this.props.popupState}
                     loading={this.props.loading}
                     viewItem={(item) => this.viewItem(item)}
                     filterDate={this.state.filterDate}
@@ -193,5 +197,6 @@ export default connect(mapStateToProps, {
     setModalState,
     loadRejectById,
     resetRejectionPopup,
-    deleteReject
+    deleteReject,
+    getProductData
 })(RejectScreen);

@@ -50,6 +50,7 @@ export const RejectionReducer = (state = INITIAL_STATE, action) => {
         case 'LOAD_REJECTBYID':
             return { ...state, loading: true, error: null };
         case 'LOAD_REJECTBYID_SUCCESS':
+            console.log(action.payload);
             return { ...state, loading: false, modalData: action.payload };
         case 'LOAD_REJECTBYID_FAIL':
             return { ...state, loading: false, error: action.payload };            
