@@ -173,7 +173,8 @@ class MonthlyStockReport extends Component {
                         year={year}
                         chartType={'none'}
                         dataset={dataset}
-                        labels={labels} 
+                        labels={labels}
+                        error={this.props.error} 
                     >
                         {this.renderReportTable()}
                     </Report>

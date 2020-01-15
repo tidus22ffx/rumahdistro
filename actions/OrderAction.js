@@ -17,7 +17,6 @@ export const getImgurToken = () => {
 export const loadAllOrder = (index, timeStamp = null) => {
     return (dispatch) => {
         dispatch({ type: 'LOAD_ALL_ORDER' });
-        //console.log(API_GET_CUSTOMER);
         const searchUrl = `http://localhost:8088/RDSdev/orderH/getAllOrderHSearch/${timeStamp}/${index-1}`;
         const loadAllUrl = `http://localhost:8088/RDSdev/orderH/getAllOrderH/${index-1}`
         const url = timeStamp !== null ? searchUrl : loadAllUrl;
@@ -25,10 +24,8 @@ export const loadAllOrder = (index, timeStamp = null) => {
         .then(response => {
           const data = response.data;
           if (data.status === 200) {
-            console.log(data);
             loadAllOrderSuccess(dispatch, data, index);
           } else if (data.status === 202) {
-            console.log(data);
             loadAllOrderSuccess(dispatch, data, index);
           } else {
             console.log('fail', data);
@@ -142,16 +139,13 @@ export const saveOrder = (details, header, user) => {
     orderDetails: detailOrder(),
   }
 
-  console.log(body);
   return (dispatch) => {
         dispatch({ type: 'SAVE_ORDER' });
         axios.post(`http://localhost:8088/RDSdev/orderH/add`, body)
         .then(response =>{ 
-            console.log('sukses save', response);
             saveOrderSuccess(dispatch, response.data.datas);
         })
         .catch(error => {
-            console.log(error.response);
             saveOrderFail(dispatch, error.toString());
         });
     }
@@ -311,7 +305,6 @@ export const deleteOrder = (item) => {
         saveOrderSuccess(dispatch, response.data.datas);
       })
       .catch(error => {
-          console.log(error.response);
           saveOrderFail(dispatch, error.toString());
       });
   }

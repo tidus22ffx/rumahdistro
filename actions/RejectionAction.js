@@ -109,13 +109,14 @@ export const saveRejection = (modalData, status=0) => {
     return (dispatch) => {
         dispatch({ type: 'saveReject' });
         const body = {
-            'id':modalData.rejectId,
-            'idProduct' : modalData.product.value,
+            'id':modalData.rejectId ? modalData.rejectId : '',
+            'idProduct' : modalData.product.value.idProduct,
             'rejectDate' : modalData.rejectDate,
             'qty' : modalData.qty,
             'rejectType' : modalData.status.value,
             'status' : modalData.status.value,
         }
+        console.log({body});
         axios.post('http://localhost:8088/RDSdev/reject/add', body)
         .then(response => {
           const data = response.data;
@@ -123,11 +124,12 @@ export const saveRejection = (modalData, status=0) => {
           if (data.status === 200) {
             saveRejectSuccess(dispatch, data.datas);
           } else {
+            console.log(response);
             saveRejectFail(dispatch, data.message);
           }
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.response);
           saveRejectFail(dispatch, err.toString());
         });
     } 

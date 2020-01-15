@@ -9,6 +9,7 @@ export const getYearlyReport = (year = new Date().getFullYear()) => {
             const data = response.data;
             getYearlyReportSuccess(dispatch, data.datas);
         }).catch((error) => {
+            returnError(dispatch, error);
             console.log(error.response);
         })
     }
@@ -46,6 +47,7 @@ export const getMonthlyReport = (year = new Date().getFullYear(), month = new Da
             const data = response.data;
             getMonthlyReportSuccess(dispatch, data.datas, month, year);
         }).catch((error) => {
+            returnError(dispatch, error);
             console.log(error.response);
         })
     }
@@ -110,6 +112,7 @@ export const getDailyReport = (
             const data = response.data;
             getMonthlyReportSuccess(dispatch, data.datas);
         }).catch((error) => {
+            returnError(dispatch, error);
             console.log(error.response);
         })
     }
@@ -124,6 +127,7 @@ export const loadUserReport = () => {
           loadUserSuccess(dispatch, data.datas);
       })
       .catch(error => {
+          returnError(dispatch, error);
           console.log(error);
       })
     };
@@ -169,6 +173,7 @@ export const getMonthlyOperationalReport = (
             const data = response.data;
             getOperationalReportSuccess(dispatch, data.datas, month, year);
         }).catch((error) => {
+            returnError(dispatch, error);
             console.log(error.response);
         })
     }
@@ -192,6 +197,7 @@ export const getRejectReport = (
             const data = response.data;
             getRejectReportSuccess(dispatch, data.datas, month, year);
         }).catch((error) => {
+            returnError(dispatch, error);
             console.log(error.response);
         })
     }
@@ -235,6 +241,7 @@ export const getMonthlyStockReport = (year, month, product) => {
             const data = response.data;
             getStockReportSuccess(dispatch, data.datas, month, year);
         }).catch((error) => {
+            returnError(dispatch, error);
             console.log(error.response);
         })
     }
@@ -256,6 +263,7 @@ export const loadProductReport = () => {
             loadProductSuccess(dispatch, data.datas);
         })
         .catch(error => {
+            returnError(dispatch, error);
             console.log(error);
         })
       };
@@ -280,4 +288,11 @@ export const selectProductReport = (item) => {
         type: 'SELECT_PRODUCT_REPORT',
         payload: item,
     }
+}
+
+const returnError = (dispatch, error) => {
+    dispatch({
+        type: 'ERROR',
+        payload: error.toString(),
+    });
 }

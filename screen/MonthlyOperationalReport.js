@@ -141,6 +141,7 @@ class MonthlyOperationalReport extends Component {
                         chartType={'none'}
                         dataset={dataset}
                         labels={labels} 
+                        error={this.props.error}
                     >
                         {this.renderReportTable()}
                     </Report>

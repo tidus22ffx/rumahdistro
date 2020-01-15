@@ -228,6 +228,13 @@ class Report extends Component {
         return children;
     }
 
+    showError(){
+        console.log(this.props.error);
+        if(this.props.error !== null) {
+            return <div style={styles.error}>{this.props.error}</div>;
+        }
+    }
+
     renderBody(){
         if(this.props.loading){
             return (
@@ -260,8 +267,6 @@ class Report extends Component {
 
     render(){
         const { globalContainer, controlContainer, buttonContainer } = styles;
-        
-
         return(
             <div style={globalContainer}>
                 {this.renderHeader()}
@@ -274,6 +279,7 @@ class Report extends Component {
                             onClick={() => this.props.search()}
                         > Cari </ButtonTransparent>
                     </div>
+                    {this.showError()}
                 </div>
                 {this.renderBody()}                
             </div>
@@ -331,7 +337,15 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    error: {
+        fontSize: 14,
+        color: '#c0392b',
+        fontFamily: 'Titillium Web',
+        marginTop: 10,
+        textAlign: 'center',
+        width: '100%', 
+    },
 }
 
 export default Report;

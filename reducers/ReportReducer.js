@@ -29,7 +29,8 @@ const INITIAL_STATE = {
     selectedProduct: {
         label: '',
         value: null,
-    }
+    },
+    error: null,
 }
 
 const ReportReducer = (state = INITIAL_STATE, action) => {
@@ -76,6 +77,8 @@ const ReportReducer = (state = INITIAL_STATE, action) => {
             return { ...state, loading: false, productList: action.payload };
         case 'SELECT_PRODUCT_REPORT':
             return { ...state, selectedProduct: action.payload };
+        case 'ERROR':
+            return {...state, loading: false, error: action.payload}
         default:
             return state;
     }

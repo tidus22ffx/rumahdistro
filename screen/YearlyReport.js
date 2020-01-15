@@ -140,7 +140,8 @@ class YearlyReport extends Component {
                         labels={[
                             'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
                             'Agustus', 'September', 'Oktober', 'November', 'Desember'
-                        ]} 
+                        ]}
+                        error={this.props.error} 
                     >
                         {this.renderReportTable()}
                     </Report>
